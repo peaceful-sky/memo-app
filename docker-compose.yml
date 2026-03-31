@@ -1,0 +1,22 @@
+services:
+  memo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: memo-app
+    ports:
+      - "8080:80"
+    volumes:
+      - memo-db:/var/db
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Seoul
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/api/health.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  memo-db:
+    driver: local
