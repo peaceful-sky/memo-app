@@ -27,7 +27,7 @@ if ($method === 'GET') {
 
 // POST /api/categories.php - 생성
 if ($method === 'POST') {
-    $data = getJsonBody();
+    $data  = getJsonBody();
     $name  = trim($data['name'] ?? '');
     $color = $data['color'] ?? '#888888';
 
@@ -35,8 +35,6 @@ if ($method === 'POST') {
     if (mb_strlen($name) > 30) jsonResponse(['success' => false, 'error' => '이름은 30자 이하로 입력해주세요.'], 400);
 
     $db = getDB();
-
-    // 중복 확인
     $check = $db->prepare("SELECT id FROM categories WHERE user_id = ? AND name = ?");
     $check->execute([$userId, $name]);
     if ($check->fetch()) jsonResponse(['success' => false, 'error' => '같은 이름의 카테고리가 이미 있습니다.'], 409);
@@ -55,40 +53,31 @@ if ($method === 'PUT' && isset($_GET['id'])) {
     $id   = (int) $_GET['id'];
     $data = getJsonBody();
 
-    $db = getDB();
+    $db   = getDB();
     $stmt = $db->prepare("SELECT id FROM categories WHERE id = ? AND user_id = ?");
     $stmt->execute([$id, $userId]);
     if (!$stmt->fetch()) jsonResponse(['success' => false, 'error' => 'Not found'], 404);
 
-    $fields = [];
-    $params = [];
+    $fields = []; $params = [];
     if (array_key_exists('name', $data)) {
         $name = trim($data['name']);
         if ($name === '') jsonResponse(['success' => false, 'error' => '이름을 입력해주세요.'], 400);
-        // 중복 확인 (자신 제외)
         $check = $db->prepare("SELECT id FROM categories WHERE user_id = ? AND name = ? AND id != ?");
         $check->execute([$userId, $name, $id]);
         if ($check->fetch()) jsonResponse(['success' => false, 'error' => '같은 이름의 카테고리가 이미 있습니다.'], 409);
-        $fields[] = 'name=?';
-        $params[] = $name;
+        $fields[] = 'name=?'; $params[] = $name;
     }
-    if (array_key_exists('color', $data)) {
-        $fields[] = 'color=?';
-        $params[] = $data['color'];
-    }
-
+    if (array_key_exists('color', $data)) { $fields[] = 'color=?'; $params[] = $data['color']; }
     if (empty($fields)) jsonResponse(['success' => false, 'error' => 'Nothing to update'], 400);
 
     $params[] = $id;
     $db->prepare("UPDATE categories SET " . implode(', ', $fields) . " WHERE id = ?")->execute($params);
 
     $stmt = $db->prepare("
-        SELECT c.id, c.name, c.color, c.created_at,
-               COUNT(m.id) AS memo_count
+        SELECT c.id, c.name, c.color, c.created_at, COUNT(m.id) AS memo_count
         FROM categories c
         LEFT JOIN memos m ON m.category_id = c.id AND m.user_id = c.user_id
-        WHERE c.id = ?
-        GROUP BY c.id
+        WHERE c.id = ? GROUP BY c.id
     ");
     $stmt->execute([$id]);
     jsonResponse(['success' => true, 'category' => $stmt->fetch()]);
@@ -96,12 +85,11 @@ if ($method === 'PUT' && isset($_GET['id'])) {
 
 // DELETE /api/categories.php?id=X - 삭제
 if ($method === 'DELETE' && isset($_GET['id'])) {
-    $id = (int) $_GET['id'];
-    $db = getDB();
+    $id   = (int) $_GET['id'];
+    $db   = getDB();
     $stmt = $db->prepare("DELETE FROM categories WHERE id = ? AND user_id = ?");
     $stmt->execute([$id, $userId]);
     if ($stmt->rowCount() === 0) jsonResponse(['success' => false, 'error' => 'Not found'], 404);
-    // 해당 카테고리에 속한 메모들은 category_id = NULL 로 자동 처리 (ON DELETE SET NULL)
     jsonResponse(['success' => true]);
 }
 

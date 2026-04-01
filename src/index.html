@@ -964,7 +964,8 @@ kbd {
   background: var(--border);
 }
 
-/* ── Category Filter Bar ───────────────────────────── */
+
+/* ── Category Bar ──────────────────────────────────── */
 .category-bar {
   display: flex;
   align-items: center;
@@ -989,179 +990,76 @@ kbd {
   white-space: nowrap;
 }
 .cat-chip:hover { border-color: var(--accent2); color: var(--text); }
-.cat-chip.active {
-  background: var(--bg3);
-  border-color: var(--accent2);
-  color: var(--text);
-}
-.cat-chip-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.cat-chip-count {
-  font-size: 10px;
-  color: var(--accent);
-  margin-left: 2px;
-}
-.cat-chip-del {
+.cat-chip.active { background: var(--bg3); border-color: var(--accent2); color: var(--text); }
+.cat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.cat-count { font-size: 10px; color: var(--accent); margin-left: 2px; }
+.cat-edit {
   width: 14px; height: 14px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
-  color: var(--accent);
-  font-size: 12px;
-  line-height: 1;
-  margin-left: 2px;
-  transition: color var(--transition), background var(--transition);
+  border-radius: 50%; color: var(--accent); font-size: 12px;
+  margin-left: 2px; transition: color var(--transition), background var(--transition);
 }
-.cat-chip-del:hover { color: var(--danger); background: rgba(207,102,121,0.12); }
-
-/* 카테고리 추가 버튼 */
+.cat-edit:hover { color: var(--text2); background: rgba(255,255,255,0.08); }
 .btn-add-cat {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-  padding: 6px 10px;
-  border-radius: 20px;
-  border: 1px dashed var(--border);
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+  color: var(--accent); padding: 6px 10px;
+  border-radius: 20px; border: 1px dashed var(--border);
   transition: all var(--transition);
 }
 .btn-add-cat:hover { color: var(--text2); border-color: var(--accent); }
 
 /* ── Category Modal ────────────────────────────────── */
-.cat-modal-overlay {
+.cat-overlay {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
   z-index: 250;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
 }
-.cat-modal-overlay.open { opacity: 1; pointer-events: all; }
-.cat-modal-overlay.open .cat-modal { transform: scale(1) translateY(0); opacity: 1; }
+.cat-overlay.open { opacity: 1; pointer-events: all; }
+.cat-overlay.open .cat-modal { transform: scale(1) translateY(0); opacity: 1; }
 .cat-modal {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  width: 100%;
-  max-width: 360px;
-  padding: 24px;
-  transform: scale(0.97) translateY(8px);
-  opacity: 0;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+  width: 100%; max-width: 340px; padding: 24px;
+  transform: scale(0.97) translateY(8px); opacity: 0;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
-.cat-modal-title {
-  font-family: var(--sans);
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-.cat-modal-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 16px;
-}
-.cat-modal-field label {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
+.cat-modal-title { font-family: var(--sans); font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+.cat-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.cat-field label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 #cat-name-input {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 10px 14px;
-  font-family: var(--mono);
-  font-size: 14px;
-  color: var(--text);
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 10px 14px; font-family: var(--mono); font-size: 14px; color: var(--text);
   transition: border-color var(--transition);
 }
 #cat-name-input:focus { border-color: var(--accent2); }
 #cat-name-input::placeholder { color: var(--accent); }
-.cat-color-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
+.cat-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
 .cat-swatch {
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid transparent; cursor: pointer;
   transition: transform var(--transition), border-color var(--transition);
 }
 .cat-swatch:hover { transform: scale(1.2); }
 .cat-swatch.active { border-color: var(--text2); }
-.cat-error {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--danger);
-  min-height: 16px;
-  margin-bottom: 4px;
-}
-.cat-modal-btns {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  margin-top: 8px;
-}
+.cat-error { font-family: var(--mono); font-size: 12px; color: var(--danger); min-height: 16px; margin-bottom: 4px; }
+.cat-modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
 
-/* 카드에 카테고리 뱃지 */
-.card-cat-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-.card-cat-badge-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+/* 카드 카테고리 뱃지 */
+.card-cat { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 10px; color: var(--accent); margin-bottom: 6px; }
+.card-cat-dot { width: 6px; height: 6px; border-radius: 50%; }
 
-/* 모달 카테고리 선택 */
-.modal-cat-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* 메모 모달 카테고리 선택 */
+.modal-cat-row { display: flex; align-items: center; gap: 8px; }
+.modal-cat-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+#modal-cat-select {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 10px; font-family: var(--mono); font-size: 12px; color: var(--text2);
+  transition: border-color var(--transition); cursor: pointer; max-width: 180px;
 }
-.modal-cat-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  white-space: nowrap;
-}
-#modal-category-select {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 5px 10px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text2);
-  transition: border-color var(--transition);
-  cursor: pointer;
-  max-width: 180px;
-}
-#modal-category-select:focus { border-color: var(--accent2); outline: none; }
-#modal-category-select option { background: var(--bg2); }
+#modal-cat-select:focus { border-color: var(--accent2); outline: none; }
+#modal-cat-select option { background: var(--bg2); }
 
 /* ── Responsive ────────────────────────────────────── */
 @media (max-width: 640px) {
@@ -1254,10 +1152,8 @@ kbd {
       </div>
     </div>
 
-    <!-- Category Filter Bar -->
-    <div class="category-bar" id="category-bar">
-      <!-- JS로 렌더링 -->
-    </div>
+    <!-- Category Bar -->
+    <div class="category-bar" id="category-bar"></div>
 
     <!-- Toolbar -->
     <div class="toolbar">
@@ -1379,7 +1275,7 @@ kbd {
         </div>
         <div class="modal-cat-row">
           <span class="modal-cat-label">카테고리</span>
-          <select id="modal-category-select">
+          <select id="modal-cat-select">
             <option value="">미분류</option>
           </select>
         </div>
@@ -1394,21 +1290,21 @@ kbd {
   </div>
 </div>
 
-<!-- ── Category Modal ─────────────────────────────── -->
-<div class="cat-modal-overlay" id="cat-modal-overlay" onclick="handleCatOverlayClick(event)">
+<!-- ── Category Modal ───────────────────────────── -->
+<div class="cat-overlay" id="cat-overlay" onclick="handleCatOverlay(event)">
   <div class="cat-modal">
     <div class="cat-modal-title" id="cat-modal-title">카테고리 추가</div>
-    <div class="cat-modal-field">
+    <div class="cat-field">
       <label>이름</label>
       <input type="text" id="cat-name-input" placeholder="예: 업무, 개인, 공부..." maxlength="30">
     </div>
-    <div class="cat-modal-field">
+    <div class="cat-field">
       <label>색상</label>
-      <div class="cat-color-row" id="cat-color-row"></div>
+      <div class="cat-swatches" id="cat-swatches"></div>
     </div>
     <div class="cat-error" id="cat-error"></div>
     <div class="cat-modal-btns">
-      <button class="btn-danger" id="cat-delete-btn" onclick="deleteCat(editingCatId)" style="display:none">삭제</button>
+      <button class="btn-danger" id="cat-del-btn" onclick="deleteCat()" style="display:none">삭제</button>
       <div style="flex:1"></div>
       <button class="btn-cancel" onclick="closeCatModal()">취소</button>
       <button class="btn-save" onclick="saveCat()">저장</button>
@@ -1440,9 +1336,10 @@ let deleteTargetId = null;
 let selectedColor = '#888888';
 let currentUser = null;
 let editorTab = 'write';
-let activeCategoryId = null; // null=전체, 0=미분류, N=카테고리ID
-let editingCatId = null;     // 카테고리 수정 시 사용
+let activeCatId = null;   // null=전체, 0=미분류, N=카테고리ID
+let editingCatId = null;
 let selectedCatColor = '#888888';
+const CAT_COLORS = ['#888888','#7a9e7e','#7a8e9e','#9e7a8e','#c8a96e','#9e8a7a','#7a9e9e','#9e9e7a','#cf6679','#7a7a9e'];
 
 const COLORS = [
   { value: '#888888', label: 'Gray' },
@@ -1457,9 +1354,7 @@ const COLORS = [
 document.addEventListener('DOMContentLoaded', async () => {
   renderColorSwatches();
   await checkAuth();
-  // 에디터 textarea에 탭 키 지원
   document.getElementById('modal-content-input').addEventListener('keydown', handleEditorKeydown);
-  // 카테고리 모달 Enter 키 저장
   document.getElementById('cat-name-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') { e.preventDefault(); saveCat(); }
   });
@@ -1526,7 +1421,7 @@ async function handleLogout() {
   await fetch('/api/auth.php?action=logout', { method: 'POST' });
   document.getElementById('app-screen').classList.remove('visible');
   document.getElementById('auth-screen').classList.remove('hidden');
-  memos = []; currentUser = null;
+  memos = []; categories = []; currentUser = null; activeCatId = null;
 }
 function showApp() {
   document.getElementById('header-username').textContent = currentUser.username;
@@ -1549,181 +1444,121 @@ async function loadMemos() {
 // ── Categories ─────────────────────────────────────────
 async function loadCategories() {
   try {
-    const res = await fetch('/api/categories.php');
+    const res  = await fetch('/api/categories.php');
     const data = await res.json();
     if (data.success) {
       categories = data.categories;
-      renderCategoryBar();
-      populateCategorySelect();
       document.getElementById('stat-categories').textContent = categories.length;
+      renderCategoryBar();
+      populateCatSelect();
     }
   } catch(e) {}
 }
 
 function renderCategoryBar() {
   const bar = document.getElementById('category-bar');
-  const uncategorizedCount = memos.filter(m => !m.category_id).length;
-
-  let html = `
-    <button class="cat-chip ${activeCategoryId === null ? 'active' : ''}" onclick="filterByCategory(null)">
-      전체
-      <span class="cat-chip-count">${memos.length}</span>
-    </button>`;
-
+  const uncategorized = memos.filter(m => !m.category_id).length;
+  let html = `<button class="cat-chip ${activeCatId === null ? 'active' : ''}" onclick="filterByCat(null)">전체 <span class="cat-count">${memos.length}</span></button>`;
   categories.forEach(c => {
-    const count = memos.filter(m => m.category_id == c.id).length;
-    const isActive = activeCategoryId === c.id;
-    html += `
-      <button class="cat-chip ${isActive ? 'active' : ''}" onclick="filterByCategory(${c.id})">
-        <span class="cat-chip-dot" style="background:${c.color}"></span>
-        ${escHtml(c.name)}
-        <span class="cat-chip-count">${count}</span>
-        <span class="cat-chip-del" onclick="event.stopPropagation();editCat(${c.id})" title="편집">✎</span>
-      </button>`;
-  });
-
-  html += `
-    <button class="cat-chip ${activeCategoryId === 0 ? 'active' : ''}" onclick="filterByCategory(0)">
-      미분류
-      <span class="cat-chip-count">${uncategorizedCount}</span>
-    </button>
-    <button class="btn-add-cat" onclick="openCatModal()">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      카테고리 추가
+    const cnt = memos.filter(m => m.category_id == c.id).length;
+    html += `<button class="cat-chip ${activeCatId === c.id ? 'active' : ''}" onclick="filterByCat(${c.id})">
+      <span class="cat-dot" style="background:${c.color}"></span>${escHtml(c.name)}<span class="cat-count">${cnt}</span>
+      <span class="cat-edit" onclick="event.stopPropagation();openCatModal(${c.id})" title="편집">✎</span>
     </button>`;
-
+  });
+  html += `<button class="cat-chip ${activeCatId === 0 ? 'active' : ''}" onclick="filterByCat(0)">미분류 <span class="cat-count">${uncategorized}</span></button>`;
+  html += `<button class="btn-add-cat" onclick="openCatModal()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>카테고리 추가</button>`;
   bar.innerHTML = html;
 }
 
-function populateCategorySelect() {
-  const sel = document.getElementById('modal-category-select');
-  const current = sel.value;
+function populateCatSelect() {
+  const sel = document.getElementById('modal-cat-select');
+  const cur = sel.value;
   sel.innerHTML = '<option value="">미분류</option>';
   categories.forEach(c => {
     const opt = document.createElement('option');
-    opt.value = c.id;
-    opt.textContent = c.name;
+    opt.value = c.id; opt.textContent = c.name;
     sel.appendChild(opt);
   });
-  sel.value = current;
+  sel.value = cur;
 }
 
-function filterByCategory(catId) {
-  activeCategoryId = catId;
+function filterByCat(catId) {
+  activeCatId = catId;
   renderCategoryBar();
   renderMemos(document.getElementById('search-input').value);
 }
 
-// ── Category Modal ─────────────────────────────────────
-const CAT_COLORS = ['#888888','#7a9e7e','#7a8e9e','#9e7a8e','#c8a96e','#9e8a7a','#7a9e9e','#9e9e7a','#cf6679','#7a7a9e'];
-
-function renderCatColorSwatches() {
-  const row = document.getElementById('cat-color-row');
-  row.innerHTML = CAT_COLORS.map(c =>
+// ── Category Modal ──────────────────────────────────────
+function renderCatSwatches() {
+  document.getElementById('cat-swatches').innerHTML = CAT_COLORS.map(c =>
     `<button class="cat-swatch ${c === selectedCatColor ? 'active' : ''}" style="background:${c}" onclick="selectCatColor('${c}')"></button>`
   ).join('');
 }
 function selectCatColor(c) {
   selectedCatColor = c;
-  document.querySelectorAll('.cat-swatch').forEach(s => {
-    s.classList.toggle('active', rgbToHex(s.style.background) === c || s.style.background === c);
-  });
+  document.querySelectorAll('.cat-swatch').forEach(s =>
+    s.classList.toggle('active', rgbToHex(s.style.background) === c || s.style.background === c)
+  );
 }
-
 function openCatModal(catId = null) {
   editingCatId = catId;
   const cat = catId ? categories.find(c => c.id == catId) : null;
   document.getElementById('cat-modal-title').textContent = cat ? '카테고리 편집' : '카테고리 추가';
   document.getElementById('cat-name-input').value = cat ? cat.name : '';
   document.getElementById('cat-error').textContent = '';
-  document.getElementById('cat-delete-btn').style.display = cat ? 'inline-flex' : 'none';
+  document.getElementById('cat-del-btn').style.display = cat ? 'inline-flex' : 'none';
   selectedCatColor = cat ? cat.color : '#888888';
-  renderCatColorSwatches();
-  document.getElementById('cat-modal-overlay').classList.add('open');
+  renderCatSwatches();
+  document.getElementById('cat-overlay').classList.add('open');
   setTimeout(() => document.getElementById('cat-name-input').focus(), 100);
 }
-function editCat(catId) { openCatModal(catId); }
-function closeCatModal() {
-  document.getElementById('cat-modal-overlay').classList.remove('open');
-  editingCatId = null;
-}
-function handleCatOverlayClick(e) {
-  if (e.target === document.getElementById('cat-modal-overlay')) closeCatModal();
-}
+function closeCatModal() { document.getElementById('cat-overlay').classList.remove('open'); editingCatId = null; }
+function handleCatOverlay(e) { if (e.target === document.getElementById('cat-overlay')) closeCatModal(); }
 
 async function saveCat() {
-  const name = document.getElementById('cat-name-input').value.trim();
+  const name  = document.getElementById('cat-name-input').value.trim();
   const errEl = document.getElementById('cat-error');
   errEl.textContent = '';
   if (!name) { errEl.textContent = '이름을 입력해주세요.'; return; }
-
   try {
-    let res;
-    if (editingCatId) {
-      res = await fetch(`/api/categories.php?id=${editingCatId}`, {
-        method: 'PUT', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ name, color: selectedCatColor })
-      });
-    } else {
-      res = await fetch('/api/categories.php', {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ name, color: selectedCatColor })
-      });
-    }
-    const data = await res.json();
+    const url    = editingCatId ? `/api/categories.php?id=${editingCatId}` : '/api/categories.php';
+    const method = editingCatId ? 'PUT' : 'POST';
+    const res    = await fetch(url, { method, headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name, color: selectedCatColor }) });
+    const data   = await res.json();
     if (data.success) {
-      categories = editingCatId
-        ? categories.map(c => c.id == editingCatId ? data.category : c)
-        : [...categories, data.category];
+      categories = editingCatId ? categories.map(c => c.id == editingCatId ? data.category : c) : [...categories, data.category];
       document.getElementById('stat-categories').textContent = categories.length;
-      renderCategoryBar();
-      populateCategorySelect();
-      closeCatModal();
+      renderCategoryBar(); populateCatSelect(); closeCatModal();
       toast(editingCatId ? '카테고리가 수정되었습니다.' : '카테고리가 추가되었습니다.', 'success');
-    } else {
-      errEl.textContent = data.error || '저장에 실패했습니다.';
-    }
+    } else { errEl.textContent = data.error || '저장에 실패했습니다.'; }
   } catch(e) { errEl.textContent = '오류가 발생했습니다.'; }
 }
 
-async function deleteCat(catId) {
-  if (!confirm('카테고리를 삭제하면 해당 카테고리의 메모들은 미분류로 이동됩니다. 계속할까요?')) return;
+async function deleteCat() {
+  if (!confirm('카테고리를 삭제하면 해당 메모들은 미분류로 이동됩니다. 계속할까요?')) return;
   try {
-    const res = await fetch(`/api/categories.php?id=${catId}`, { method: 'DELETE' });
+    const res  = await fetch(`/api/categories.php?id=${editingCatId}`, { method: 'DELETE' });
     const data = await res.json();
     if (data.success) {
-      categories = categories.filter(c => c.id != catId);
-      // 메모의 category_id 초기화
-      memos = memos.map(m => m.category_id == catId ? {...m, category_id: null} : m);
-      if (activeCategoryId == catId) activeCategoryId = null;
+      categories = categories.filter(c => c.id != editingCatId);
+      memos = memos.map(m => m.category_id == editingCatId ? {...m, category_id: null} : m);
+      if (activeCatId == editingCatId) activeCatId = null;
       document.getElementById('stat-categories').textContent = categories.length;
-      renderCategoryBar();
-      renderMemos(document.getElementById('search-input').value);
-      populateCategorySelect();
-      closeCatModal();
-      toast('카테고리가 삭제되었습니다.', 'error');
+      renderCategoryBar(); renderMemos(document.getElementById('search-input').value); populateCatSelect();
+      closeCatModal(); toast('카테고리가 삭제되었습니다.', 'error');
     }
   } catch(e) {}
 }
 
 function renderMemos(filter = '') {
   const q = filter.trim().toLowerCase();
-
-  // 카테고리 필터
   let base = memos;
-  if (activeCategoryId === 0) {
-    base = memos.filter(m => !m.category_id);
-  } else if (activeCategoryId !== null) {
-    base = memos.filter(m => m.category_id == activeCategoryId);
-  }
-
-  // 검색 필터
-  const filtered = q
-    ? base.filter(m => m.title.toLowerCase().includes(q) || m.content.toLowerCase().includes(q))
-    : base;
-
-  const pinned   = filtered.filter(m => m.is_pinned == 1);
-  const unpinned = filtered.filter(m => m.is_pinned != 1);
+  if (activeCatId === 0)         base = memos.filter(m => !m.category_id);
+  else if (activeCatId !== null) base = memos.filter(m => m.category_id == activeCatId);
+  const filtered  = q ? base.filter(m => m.title.toLowerCase().includes(q) || m.content.toLowerCase().includes(q)) : base;
+  const pinned    = filtered.filter(m => m.is_pinned == 1);
+  const unpinned  = filtered.filter(m => m.is_pinned != 1);
 
   document.getElementById('stat-total').textContent  = memos.length;
   document.getElementById('stat-pinned').textContent = memos.filter(m=>m.is_pinned==1).length;
@@ -1732,33 +1567,23 @@ function renderMemos(filter = '') {
   pinnedSection.style.display = pinned.length ? '' : 'none';
   document.getElementById('pinned-grid').innerHTML = pinned.map(renderCard).join('');
 
-  const label = activeCategoryId === null
-    ? (q ? `검색 결과 (${filtered.length})` : '모든 메모')
-    : activeCategoryId === 0
-      ? (q ? `미분류 검색 결과 (${filtered.length})` : '미분류')
-      : (q ? `검색 결과 (${filtered.length})` : (categories.find(c=>c.id==activeCategoryId)?.name ?? '카테고리'));
-
+  const label = activeCatId === null ? (q ? `검색 결과 (${filtered.length})` : '모든 메모')
+              : activeCatId === 0    ? (q ? `미분류 검색 (${filtered.length})` : '미분류')
+              : (q ? `검색 결과 (${filtered.length})` : (categories.find(c=>c.id==activeCatId)?.name ?? '카테고리'));
   document.getElementById('all-label').textContent = label;
   document.getElementById('memo-grid').innerHTML = unpinned.map(renderCard).join('');
   document.getElementById('empty-state').classList.toggle('visible', filtered.length === 0 && !q);
-
-  // 카테고리 바도 카운트 갱신
   renderCategoryBar();
 }
 
 function renderCard(m) {
-  const date = formatDate(m.updated_at);
-  const colorBar = m.color !== '#1e1e1e' ? `style="--card-color: ${m.color}"` : '';
-  const isPinned = m.is_pinned == 1;
+  const date      = formatDate(m.updated_at);
+  const colorBar  = m.color !== '#1e1e1e' ? `style="--card-color: ${m.color}"` : '';
+  const isPinned  = m.is_pinned == 1;
   const pinnedClass = isPinned ? ' is-pinned' : '';
-  const bodyHtml = m.content
-    ? parseMarkdown(m.content)
-    : '<span style="opacity:0.3">내용 없음</span>';
-
-  const cat = m.category_id ? categories.find(c => c.id == m.category_id) : null;
-  const catBadge = cat
-    ? `<div class="card-cat-badge"><span class="card-cat-badge-dot" style="background:${cat.color}"></span>${escHtml(cat.name)}</div>`
-    : '';
+  const bodyHtml  = m.content ? parseMarkdown(m.content) : '<span style="opacity:0.3">내용 없음</span>';
+  const cat       = m.category_id ? categories.find(c => c.id == m.category_id) : null;
+  const catBadge  = cat ? `<div class="card-cat"><span class="card-cat-dot" style="background:${cat.color}"></span>${escHtml(cat.name)}</div>` : '';
 
   return `
   <div class="memo-card${pinnedClass}" ${colorBar} data-id="${m.id}" onclick="openMemoEdit(${m.id})">
@@ -1786,7 +1611,6 @@ function renderCard(m) {
     </div>
   </div>`;
 }
-}
 
 // ── Modal ──────────────────────────────────────────────
 function openModal(memoId = null) {
@@ -1796,14 +1620,9 @@ function openModal(memoId = null) {
   document.getElementById('modal-content-input').value = memo ? memo.content : '';
   selectedColor = memo ? memo.color : '#888888';
   updateSwatches();
-  // 카테고리 선택 초기화
-  populateCategorySelect();
-  const sel = document.getElementById('modal-category-select');
-  sel.value = memo && memo.category_id ? memo.category_id : '';
-  // 현재 카테고리 필터가 설정돼 있으면 기본값으로 세팅
-  if (!memo && activeCategoryId && activeCategoryId !== 0) {
-    sel.value = activeCategoryId;
-  }
+  populateCatSelect();
+  const sel = document.getElementById('modal-cat-select');
+  sel.value = memo && memo.category_id ? memo.category_id : (activeCatId && activeCatId !== 0 ? activeCatId : '');
   switchEditorTab(memoId ? 'preview' : 'write');
   document.getElementById('modal-overlay').classList.add('open');
   setTimeout(() => {
@@ -1817,9 +1636,9 @@ function handleOverlayClick(e) {
 }
 
 async function saveMemo() {
-  const title = document.getElementById('modal-title-input').value.trim() || 'Untitled';
-  const content = document.getElementById('modal-content-input').value;
-  const catVal = document.getElementById('modal-category-select').value;
+  const title       = document.getElementById('modal-title-input').value.trim() || 'Untitled';
+  const content     = document.getElementById('modal-content-input').value;
+  const catVal      = document.getElementById('modal-cat-select').value;
   const category_id = catVal ? parseInt(catVal) : null;
   try {
     let res;

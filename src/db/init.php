@@ -2,13 +2,13 @@
 $dbPath = '/var/db/memo.db';
 
 try {
-    $pdo = new PDO("sqlite:$dbPath");
+    $isNew = !file_exists($dbPath);
+    $pdo   = new PDO("sqlite:$dbPath");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $pdo->exec("PRAGMA journal_mode=WAL;");
     $pdo->exec("PRAGMA foreign_keys=ON;");
 
-    // ── users ────────────────────────────────────────────
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
             id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,7 +19,6 @@ try {
         );
     ");
 
-    // ── categories ───────────────────────────────────────
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS categories (
             id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +30,6 @@ try {
         );
     ");
 
-    // ── memos ────────────────────────────────────────────
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS memos (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,8 +41,8 @@ try {
             is_pinned   INTEGER NOT NULL DEFAULT 0,
             created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (user_id)     REFERENCES users(id)       ON DELETE CASCADE,
-            FOREIGN KEY (category_id) REFERENCES categories(id)  ON DELETE SET NULL
+            FOREIGN KEY (user_id)     REFERENCES users(id)      ON DELETE CASCADE,
+            FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
         );
     ");
 
@@ -56,15 +54,14 @@ try {
         END;
     ");
 
-    // ── 기존 DB 마이그레이션: category_id 컬럼 추가 ──────
-    $cols = $pdo->query("PRAGMA table_info(memos)")->fetchAll(PDO::FETCH_ASSOC);
+    $cols     = $pdo->query("PRAGMA table_info(memos)")->fetchAll(PDO::FETCH_ASSOC);
     $colNames = array_column($cols, 'name');
     if (!in_array('category_id', $colNames)) {
         $pdo->exec("ALTER TABLE memos ADD COLUMN category_id INTEGER DEFAULT NULL REFERENCES categories(id) ON DELETE SET NULL;");
-        echo "Migration: category_id column added to memos.\n";
+        echo "Migration: category_id column added.\n";
     }
 
-    if (filesize($dbPath) === 0 || !file_exists($dbPath)) {
+    if ($isNew) {
         chmod($dbPath, 0664);
         chown($dbPath, 'nginx');
     }
